@@ -23,8 +23,7 @@ class FileStorage():
     def save(self):
         """Encodes __objects to the JSON file (path: __file_path)"""
         with open(self.__file_path, "w", encoding="utf-8") as f:
-            dictionary = {key: obj.to_dict()
-                for key, obj in self.__objects.items()}
+            dictionary = {key: obj.to_dict() for key, obj in self.__objects.items()}
             json.dump(dictionary, f)
 
     def reload(self):
