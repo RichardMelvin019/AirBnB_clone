@@ -9,7 +9,7 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """ Test for class BaseModel"""
 
-    def setup(self):
+    def setUp(self):
         """setup. """
         self.model = BaseModel()
 
