@@ -3,12 +3,18 @@ import json
 from models.base_model import BaseModel
 
 
+classes = {
+        'BaseModel': BaseModel
+        }
+
+
 class FileStorage():
+
     """
     This Script serializes(encode) instances to a JSON file
     and deserializes(decode) JSON file to instances
     """
-    __file_path = file.json
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
@@ -23,7 +29,9 @@ class FileStorage():
     def save(self):
         """Encodes __objects to the JSON file (path: __file_path)"""
         with open(self.__file_path, "w", encoding="utf-8") as f:
-            dictionary = {key: obj.to_dict() for key, obj in self.__objects.items()}
+            dictionary = {
+                    key: obj.to_dict() for key, obj in self.__objects.items()
+                    }
             json.dump(dictionary, f)
 
     def reload(self):
@@ -32,4 +40,12 @@ class FileStorage():
         exists ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)
         """
-        pass
+        try:
+            with open(self.__file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for key, value in data.items():
+                class_name = value["__class__"]
+                class_instance = classes[class_name](**value)
+                self.__objects[key] = class_instance
+        except Exception as ex:
+            pass
