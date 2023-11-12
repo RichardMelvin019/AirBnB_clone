@@ -20,7 +20,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_method_docstring(self):
         """checks if class methods have docstring. """
-        methods = inspect.grtmembers(BasModel, predicate=inspect.ismethod)
+        methods = inspect.getmembers(BasModel, predicate=inspect.ismethod)
         msg = "method should have a dostring"
         for name, method in methods:
             with self.subTest(method=name):
