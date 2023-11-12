@@ -1,11 +1,5 @@
 #!/usr/bin/python3
 import json
-from models.base_model import BaseModel
-
-
-classes = {
-        'BaseModel': BaseModel
-        }
 
 
 class FileStorage():
@@ -33,6 +27,12 @@ class FileStorage():
                     key: obj.to_dict() for key, obj in self.__objects.items()
                     }
             json.dump(dictionary, f)
+
+    from models.base_model import BaseModel
+
+    classes = {
+            'BaseModel': BaseModel
+            }
 
     def reload(self):
         """
