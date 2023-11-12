@@ -32,7 +32,7 @@ class TestFileStorage(unittest.TestCase):
         self.storage.save()
         with open("file.json", "r", encoding="utf-8") as f:
             saved_data = json.load(f)
-        self.assertIn(f"{model.__class__.__name__}.{model.id}", saved_data
+        self.assertIn(f"{model.__class__.__name__}.{model.id}", saved_data)
 
     def test_reload(self):
         """test reload"""
