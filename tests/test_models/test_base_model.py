@@ -20,7 +20,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_method_docstring(self):
         """checks if class methods have docstring. """
-        methods = inspect.getmembers(BasModel, predicate=inspect.ismethod)
+        methods = inspect.getmembers(BaseModel, predicate=inspect.ismethod)
         msg = "method should have a dostring"
         for name, method in methods:
             with self.subTest(method=name):
@@ -29,7 +29,7 @@ class TestBaseModel(unittest.TestCase):
     def test_module_docstring(self):
         """check if modules have docstring. """
         msg = "modules does not have docstring"
-        self.assertIsNotNone(models.base_model.__doc__, msg)
+        self.assertIsNotNone(BaseModel.__module__.__doc__, msg)
 
     def test__init__(self):
         """test if an obj is a type BaseModel. """
@@ -49,7 +49,7 @@ class TestBaseModel(unittest.TestCase):
                 )
         self.assertEqual(str(self.model), object_str)
 
-    def tets_save(self):
+    def test_save(self):
         "check is date updated when save"
         first_updated_at = self.model.updated_at
         self.model.save()
