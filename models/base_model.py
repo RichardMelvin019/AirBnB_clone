@@ -38,8 +38,14 @@ class BaseModel():
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of __dict__"""
-        dictionary = self.__dict__.copy()
-        dictionary["created_at"] = self.created_at.isoformat()
-        dictionary["updated_at"] = self.updated_at.isoformat()
+        dictionary = {}
+        for key, value in self.__dict__.items():
+            if key not in ('created_at', 'updated_at'):
+                dictionary[key] = value
+            else:
+                if isinstance(value, datetime.datetime):
+                    dictionary[key] = value.isoformat()
+                else:
+                    dictionary[key] = value
         dictionary['__class__'] = self.__class__.__name__
         return dictionary
