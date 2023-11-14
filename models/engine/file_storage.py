@@ -40,12 +40,10 @@ class FileStorage():
         exists ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)
         """
-        try:
-            with open(self.__file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            for key, value in data.items():
-                class_name = value["__class__"]
-                class_instance = classes[class_name](**value)
-                self.__objects[key] = class_instance
-        except Exception as ex:
-            pass
+        if not os.path.isfile(self.__file_path):
+            return
+        with open(self.__file_path, "r", encoding="utf-8") as f:
+            dictionary = json.load(f)
+            dictionary = {key: self.classes()[value["__class__"]](**value)
+                          for key, value in dictionary.items()}
+            self.__objects = dictionary
