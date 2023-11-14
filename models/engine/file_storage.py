@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 import json
-import os
-import datetime
 
 
 class FileStorage():
@@ -42,10 +40,10 @@ class FileStorage():
         exists ; otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)
         """
-        if not os.path.isfile(FileStorage.__file_path):
-            return
-        with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
-            dictionary = json.load(f)
-            dictionary = {key: FileStorage.classes()[value["__class__"]](**value)
-                          for key, value in dictionary.items()}
-            FileStorage.__objects = dictionary
+        try:
+            with open(self.__file_path, 'r', encoding="UTF8") as f:
+                for key, value in json.load(f).items():
+                    attribute_v = eval(value["__class__"])(**value)
+                    self.__objects[key] = attribute_v
+        except FileNotFoundError:
+            pass
