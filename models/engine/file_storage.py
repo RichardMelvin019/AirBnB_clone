@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage():
@@ -28,8 +29,6 @@ class FileStorage():
                     }
             json.dump(dictionary, f)
 
-    from models.base_model import BaseModel
-
     classes = {
             'BaseModel': BaseModel
             }
@@ -43,7 +42,9 @@ class FileStorage():
         try:
             with open(self.__file_path, 'r', encoding="UTF8") as f:
                 for key, value in json.load(f).items():
-                    attribute_v = eval(value["__class__"])(**value)
-                    self.__objects[key] = attribute_v
+                    class_name = value["__class__"]
+                    if class_name in self.classes:
+                        attribute_v = self.classes[class_name](**value)
+                        self.__objects[key] = attribute_v
         except FileNotFoundError:
             pass
